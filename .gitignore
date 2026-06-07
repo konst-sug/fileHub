@@ -1,0 +1,31 @@
+# Бинарные файлы
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Директории сборки
+bin/
+build/
+dist/
+
+# Артефакты тестов
+*.test
+coverage.out
+
+# Зависимости (если не используете Go modules как часть репо)
+vendor/
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ОС
+.DS_Store
+Thumbs.db
+
+# Переменные окружения
+.env
