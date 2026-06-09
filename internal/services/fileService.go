@@ -7,8 +7,8 @@ import (
 	"mime"
 	"net/http"
 	"os"
-	"time"
 	"path/filepath"
+	"time"
 )
 
 type FileInfo struct {
@@ -20,12 +20,10 @@ type FileInfo struct {
 	Data       io.ReadSeeker
 }
 
-
 func (f *FileInfo) FileExists(filename string) bool {
 	_, err := os.Stat(filename)
 	return !os.IsNotExist(err)
 }
-
 
 func FileDownload(filename string, w http.ResponseWriter) (string, int) {
 	file, err := os.Open(filename)
@@ -43,11 +41,10 @@ func FileDownload(filename string, w http.ResponseWriter) (string, int) {
 		w.WriteHeader(http.StatusExpectationFailed)
 		return "Error load data", http.StatusExpectationFailed
 	}
-	
+
 	w.WriteHeader(http.StatusOK)
 	return "load data", http.StatusOK
 }
-
 
 func (f *FileInfo) FileGetInfo(filename string, w http.ResponseWriter) bool {
 	info, err := os.Stat(filename)
@@ -67,12 +64,12 @@ func (f *FileInfo) FileGetInfo(filename string, w http.ResponseWriter) bool {
 	}
 
 	fileInfo := &FileInfo{
-		ID:         "",                               
-		Name:       info.Name(),   
-		SizeBytes:  info.Size(), 
-		UploadedAt: info.ModTime().Format(time.RFC3339), 
-		MimeType:   mimeType, 
-		Data:       nil,// Поток данных тут не нужен, если отдаём только метаданные
+		ID:         "",
+		Name:       info.Name(),
+		SizeBytes:  info.Size(),
+		UploadedAt: info.ModTime().Format(time.RFC3339),
+		MimeType:   mimeType,
+		Data:       nil, // Поток данных тут не нужен, если отдаём только метаданные
 	}
 
 	w.Header().Set("Content-Type", "application/json")

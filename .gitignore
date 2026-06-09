@@ -29,3 +29,5 @@ Thumbs.db
 
 # Переменные окружения
 .env
+*.http
+.gitignore

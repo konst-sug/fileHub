@@ -8,8 +8,6 @@ import (
 )
 
 var validPaths = []string{
-	"/files/info",
-	"/files/versions",
 	"/files/restore/",
 	"/directories/contents/",
 	"/directories/",
@@ -23,13 +21,13 @@ func ValidatePathMiddleware(next http.Handler) http.Handler {
 		currentPath := r.URL.Path
 
 		log.Printf("[DEBUG] Request path: '%s'", currentPath)
-		log.Printf("[DEBUG] Request URL: %s", r.URL.String())
-		log.Printf("[DEBUG] Request RawPath: '%s'", r.URL.RawPath)
+		// log.Printf("[DEBUG] Request URL: %s", r.URL.String())
+		// log.Printf("[DEBUG] Request RawPath: '%s'", r.URL.RawPath)
 
 		isValid := false
-		for i, validPath := range validPaths {
+		for _, validPath := range validPaths {
 			match := currentPath == validPath
-			log.Printf("[DEBUG] [%d] '%s' == '%s' -> %v", i, currentPath, validPath, match)
+			// log.Printf("[DEBUG] [%d] '%s' == '%s' -> %v", i, currentPath, validPath, match)
 			if match {
 				isValid = true
 				log.Printf("[DEBUG] MATCH FOUND!")
@@ -55,9 +53,9 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			http.Error(w, "Missing Authorization header", http.StatusUnauthorized)
     		return	
 		}
-		parts := strings.Split(authToken, " ")
+		parts := strings.SplitN(authToken, " ", 2)
        
-		if len(parts) != 2 || strings.ToLower(parts[0]) != "Bearer" {
+		if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
 			http.Error(w, "Bad Authorization header", http.StatusUnauthorized)
     		return
 		}

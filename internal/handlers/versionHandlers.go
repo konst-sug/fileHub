@@ -28,8 +28,9 @@ func LoadFileVersionHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func RestoreFileVersionHandler(w http.ResponseWriter, r *http.Request) {
-	if !AreParamsPresent(r, "fileId", "versionId") {
-		http.Error(w, "Missing required parameters: fileId and/or versionId", http.StatusBadRequest)
+	err, msg := ArePostParamsPresent(r, "fieldId", "versionId")
+	if !err {
+		http.Error(w, msg, http.StatusBadRequest)
 		return
 	}
 	//проверка наличия файла
